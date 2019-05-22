@@ -20,7 +20,7 @@ def hello():
 class Courses(Resource):
     def get():
         #Useful functions
-        def create_json(raw_data): #Osaker på formateringen om vi ska få den till json, kanske ska vara ' eller " 
+        def create_json(raw_data): #Osaker pa formateringen om vi ska fa den till json, kanske ska vara ' eller " 
             test = raw_data
             count = test['info']['reservationcount']
             json_string = "["
