@@ -4,6 +4,5 @@ django-heroku
 flask
 flask_cors
 flask_restful
-json
 flask_jsonpify
 requests
