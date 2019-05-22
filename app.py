@@ -92,6 +92,8 @@ class Courses(Resource):
         # page = BeautifulSoup(page_raw,'html.parser')
         # page_box = page.find('table', attrs={'class': 'restable'})
         # print(page_box.read())
+        api.add_resource(Courses, '/courses') # Route_1
+        #api.add_resource(Employees_Name, '/employees/<employee_id>') # Route_3
 
 
 #if __name__ == '__main__':

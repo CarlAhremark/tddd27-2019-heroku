@@ -1,6 +1,6 @@
 django
 gunicorn
-django-heroku
+
 flask
 flask_cors
 flask_restful
