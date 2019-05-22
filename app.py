@@ -17,25 +17,6 @@ CORS(app)
 def hello():
     return jsonify(Courses.get())
 
-
-class Employees(Resource):
-    def get(self, id="0"):
-        print("id is: ",id)
-        if (id =="1"):
-            return {'employees':{'id':1, 'name':'Balram'}}
-        elif (id == "2"):
-            return  {'employees':{'id':2, 'name':'Tom'}}
-        else:
-            return {'employees': [{'id':1, 'name':'Balram'},{'id':2, 'name':'Tom'}]}
-
-class Employees_Name(Resource):
-    def get(self, employee_id):
-        print('Employee id:' + employee_id)
-        result = Employees.get(self, str(employee_id))
-        print(result)
-
-        return jsonify(result)
-
 class Courses(Resource):
     def get():
         #Useful functions
