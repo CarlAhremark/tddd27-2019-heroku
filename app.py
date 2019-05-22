@@ -20,7 +20,7 @@ def hello():
 class Courses(Resource):
     def get():
         #Useful functions
-        def create_json(raw_data): #Osäker på formateringen om vi ska få den till json, kanske ska vara ' eller " 
+        def create_json(raw_data): #Osaker på formateringen om vi ska få den till json, kanske ska vara ' eller " 
             test = raw_data
             count = test['info']['reservationcount']
             json_string = "["
@@ -53,9 +53,9 @@ class Courses(Resource):
             return json_string
 
         #Main stuff
-        #Vi har en reservationlimit på 200, så vi kan inte kolla för många kurser eller för stort tidsintervall
+        #Vi har en reservationlimit på 200, sa vi kan inte kolla för manga kurser eller för stort tidsintervall
         #ett alternativ kan ju vara att bygga schemat en kurs i taget...
-        
+       
         obj = ["529413","515157"] #Byt den adra till 529626
         object_names = ""
         #URL to get schedule for courses based on objectId
