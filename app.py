@@ -20,7 +20,7 @@ def hello():
 class Courses(Resource):
     def get():
         #Useful functions
-        def create_json(raw_data): #Osaker pa formateringen om vi ska fa den till json, kanske ska vara ' eller " 
+        def create_json(raw_data): #Osaker pa formateringen om vi ska fa den till json, kanske ska vara ' eller "
             test = raw_data
             count = test['info']['reservationcount']
             json_string = "["
@@ -55,7 +55,7 @@ class Courses(Resource):
         #Main stuff
         #Vi har en reservationlimit på 200, sa vi kan inte kolla för manga kurser eller för stort tidsintervall
         #ett alternativ kan ju vara att bygga schemat en kurs i taget...
-       
+
         obj = ["529413","515157"] #Byt den adra till 529626
         object_names = ""
         #URL to get schedule for courses based on objectId
@@ -67,7 +67,7 @@ class Courses(Resource):
                 object_names += objectid
             else:
                 object_names += ',' + objectid
-            
+
 
         page_url = "https://cloud.timeedit.net/liu/web/schema/ri.json?sid=3&p=190101-190631&objects=" + object_names + ".txt#formatlinks"
 
@@ -80,22 +80,18 @@ class Courses(Resource):
         print("json_string: ",json_string)
 
         data = dumps(result)
-        
 
 
-        return  data
 
- 
+        return json_string
+
+
 
 
         # page_raw = urlopen(url=page_url)
         # page = BeautifulSoup(page_raw,'html.parser')
         # page_box = page.find('table', attrs={'class': 'restable'})
         # print(page_box.read())
-
-
-api.add_resource(Employees, '/employees') # Route_1
-api.add_resource(Employees_Name, '/employees/<employee_id>') # Route_3
 
 
 #if __name__ == '__main__':
