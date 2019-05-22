@@ -117,5 +117,5 @@ api.add_resource(Employees, '/employees') # Route_1
 api.add_resource(Employees_Name, '/employees/<employee_id>') # Route_3
 
 
-if __name__ == '__main__':
-   app.run(port=5006)
+#if __name__ == '__main__':
+app.run(debug=True)
