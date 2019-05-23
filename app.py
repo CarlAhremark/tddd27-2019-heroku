@@ -15,31 +15,24 @@ CORS(app)
 
 @app.route("/")
 def hello():
-    return jsonify(Courses.get())
+    return jsonify(Courses.get("529413"))
 
 class Courses(Resource):
-    def get():
+    def get(objectId):
 
         #Main stuff
         #Vi har en reservationlimit på 200, sa vi kan inte kolla för manga kurser eller för stort tidsintervall
         #ett alternativ kan ju vara att bygga schemat en kurs i taget...
 
-        obj = ["529413","515157"] #Byt den adra till 529626
-        object_names = ""
         #URL to get schedule for courses based on objectId
         #   https://cloud.timeedit.net/liu/web/schema/ri.html?sid=3&p=190101-190631&objects= XXXXXXXXX, XXXXXXXXX
         #https://cloud.timeedit.net/liu/web/schema/ri.json?sid=3&p=190101-190631&objects= 529413,529626 .txt#formatlinks
 
-        for objectid in obj:
-            if object_names == "":
-                object_names += objectid
-            else:
-                object_names += ',' + objectid
 
-        page_url = "https://cloud.timeedit.net/liu/web/schema/ri.json?sid=3&p=190101-190631&objects=" + object_names + ".txt#formatlinks"
+        page_url = "https://cloud.timeedit.net/liu/web/schema/ri.json?sid=3&p=190101-190631&objects=" + objectId + ".txt#formatlinks"
         result = requests.get(page_url).text
-        test = loads(result)
-        return test['reservations']
+        data = loads(result)
+        return data['reservations'], int(data['info']['reservationcount'])
 
 
 
