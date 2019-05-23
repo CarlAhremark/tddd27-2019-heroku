@@ -4,6 +4,7 @@ from flask_restful import Resource, Api
 from json import dumps, loads
 from flask_jsonpify import jsonify
 import requests
+import json
 
 
 app = Flask(__name__)
@@ -15,9 +16,49 @@ CORS(app)
 
 @app.route("/")
 def hello():
-    return jsonify(Courses.get("529413"))
+    return jsonify(Courses.get(objectId="529413"))
 
 class Courses(Resource):
+    def create_json(raw_data): #Osäker på formateringen om vi ska få den till json, kanske ska vara ' eller "
+
+        count = raw_data['info']['reservationcount']
+        print(count)
+        json_string = {}
+
+
+        #print(raw_data['reservations'][0]['startdate'])
+        for i in range(count):
+            json_string[i] = {}
+            title = raw_data['reservations'][i]['columns'][0] + ' <br /> '\
+                + raw_data['reservations'][i]['columns'][1] + ' <br /> ' \
+                + raw_data['reservations'][i]['columns'][2] + ' <br /> ' \
+                + raw_data['reservations'][i]['columns'][3]
+            title = title.replace(',', '')
+
+            json_string[i]['start'] =  [\
+            raw_data['reservations'][i]['startdate'][0:4]  ,\
+            str(int(raw_data['reservations'][i]['startdate'][5:7]) - 1)  ,\
+            raw_data['reservations'][i]['startdate'][8:10]  , \
+            raw_data['reservations'][i]['starttime'][0:2]  , \
+            raw_data['reservations'][i]['starttime'][3:5]]
+
+            json_string[i]['end'] = [\
+            raw_data['reservations'][i]['enddate'][0:4]  ,\
+            str(int(raw_data['reservations'][i]['enddate'][5:7]) - 1)  ,\
+            raw_data['reservations'][i]['enddate'][8:10]  , \
+            raw_data['reservations'][i]['endtime'][0:2]  , \
+            raw_data['reservations'][i]['endtime'][3:5]]
+
+            json_string[i]['title'] = title
+
+            json_string[i]['color'] = 'color.blue'
+
+
+
+
+
+        return json_string
+
     def get(objectId):
 
         #Main stuff
@@ -32,7 +73,11 @@ class Courses(Resource):
         page_url = "https://cloud.timeedit.net/liu/web/schema/ri.json?sid=3&p=190101-190631&objects=" + objectId + ".txt#formatlinks"
         result = requests.get(page_url).text
         data = loads(result)
-        return data['reservations'], int(data['info']['reservationcount'])
+
+        #test = Courses.create_json(data)
+
+        return Courses.create_json(data)
+
 
 
 
