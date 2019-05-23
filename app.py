@@ -18,11 +18,18 @@ CORS(app)
 def hello():
     return jsonify(Courses.get(objectId="529413"))
 
+@app.route("/courselist", methods=['POST'])
+def retrieve_courselist():
+    courseList = request.form()
+    print(courseList)
+    return courseList
+
+
+
 class Courses(Resource):
     def create_json(raw_data): #Osäker på formateringen om vi ska få den till json, kanske ska vara ' eller "
 
         count = raw_data['info']['reservationcount']
-        print(count)
         json_string = {}
 
 
