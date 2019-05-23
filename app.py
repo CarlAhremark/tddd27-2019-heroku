@@ -7,7 +7,7 @@ import requests
 
 
 app = Flask(__name__)
-
+api = Api(app)
 
 SECRET_KEY = '1942e6cc2c1e7f6cfcd37551'
 
@@ -34,6 +34,8 @@ class Courses(Resource):
         result = requests.get(page_url).text
         test = loads(result)
         return test['reservations']
+
+api.add_resource(Courses, '/courses')
 
 if __name__=='__main__':
 
