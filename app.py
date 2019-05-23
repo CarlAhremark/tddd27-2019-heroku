@@ -15,7 +15,7 @@ CORS(app)
 
 @app.route("/")
 def hello():
-    return Courses.get()
+    return jsonify(Courses.get())
 
 class Courses(Resource):
     def get():
