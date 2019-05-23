@@ -15,7 +15,7 @@ CORS(app)
 
 @app.route("/")
 def hello():
-    return jsonify(Courses.get())
+    return Courses.get()
 
 class Courses(Resource):
     def get():
@@ -32,21 +32,21 @@ class Courses(Resource):
                     + raw_data['reservations'][i]['columns'][3]
                 title = title.replace(',', ' ')
                 if (i == 0):
-                    json_string += f"{{ startdate: {test['reservations'][i]['startdate']}, "\
-                        f"starttime: {test['reservations'][i]['starttime']}, "\
-                        f"enddate: {test['reservations'][i]['enddate']}, "\
-                        f"endtime: {test['reservations'][i]['endtime']}, "\
-                        f"title: {title}, "\
-                        f"color: color.yellow, "\
-                        f"actions: this.actions }}"
+                    json_string += f"{{ startdate: '{test['reservations'][i]['startdate']}', "\
+                        f"starttime: '{test['reservations'][i]['starttime']}', "\
+                        f"enddate: '{test['reservations'][i]['enddate']}', "\
+                        f"endtime: '{test['reservations'][i]['endtime']}', "\
+                        f"title: '{title}', "\
+                        f"color: 'color.yellow', "\
+                        f"actions: 'this.actions' }}"
                 else:
-                    json_string += f",{{ startdate: {test['reservations'][i]['startdate']}, "\
-                        f"starttime: {test['reservations'][i]['starttime']}, "\
-                        f"enddate: {test['reservations'][i]['enddate']}, "\
-                        f"endtime: {test['reservations'][i]['endtime']}, "\
-                        f"title: {title}, "\
-                        f"color: color.yellow, "\
-                        f"actions: this.actions }}"
+                    json_string += f",{{ startdate: '{test['reservations'][i]['startdate']}', "\
+                        f"starttime: '{test['reservations'][i]['starttime']}', "\
+                        f"enddate: '{test['reservations'][i]['enddate']}', "\
+                        f"endtime: '{test['reservations'][i]['endtime']}', "\
+                        f"title: '{title}', "\
+                        f"color: 'color.yellow', "\
+                        f"actions: 'this.actions' }}"
 
 
             json_string += "];"
