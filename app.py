@@ -11,7 +11,7 @@ import urllib3
 
 app = Flask(__name__)
 api = Api(app)
-
+SECRET_KEY = '1942e6cc2c1e7f6cfcd37551'
 CORS(app)
 
 @app.route("/")
