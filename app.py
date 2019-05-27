@@ -5,8 +5,6 @@ from json import dumps, loads
 from flask_jsonpify import jsonify
 import requests
 import json
-from bs4 import BeautifulSoup as soup
-import urllib3
 
 
 app = Flask(__name__)
