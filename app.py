@@ -18,20 +18,17 @@ CORS(app)
 def hello():
     return jsonify(Courses.get(objectId="529413"))
 
-@app.route("/courselist", methods=['POST'])
+@app.route("/test", methods=['GET'])
 def retrieve_courselist():
-    courseList = request.form()
+    courseList = request.data
     print(courseList)
     return courseList
-
-
 
 class Courses(Resource):
     def create_json(raw_data): #Osäker på formateringen om vi ska få den till json, kanske ska vara ' eller "
 
         count = raw_data['info']['reservationcount']
         json_string = {}
-
 
         #print(raw_data['reservations'][0]['startdate'])
         for i in range(count):
@@ -60,10 +57,6 @@ class Courses(Resource):
 
             json_string[i]['color'] = 'color.blue'
 
-
-
-
-
         return json_string
 
     def get(objectId):
@@ -76,23 +69,12 @@ class Courses(Resource):
         #   https://cloud.timeedit.net/liu/web/schema/ri.html?sid=3&p=190101-190631&objects= XXXXXXXXX, XXXXXXXXX
         #https://cloud.timeedit.net/liu/web/schema/ri.json?sid=3&p=190101-190631&objects= 529413,529626 .txt#formatlinks
 
-
         page_url = "https://cloud.timeedit.net/liu/web/schema/ri.json?sid=3&p=190101-190631&objects=" + objectId + ".txt#formatlinks"
         result = requests.get(page_url).text
         data = loads(result)
-
-        #test = Courses.create_json(data)
-
         return Courses.create_json(data)
 
-
-
-
-
-        #
         api.add_resource(Courses, '/courses') # Route_1
-        #api.add_resource(Employees_Name, '/employees/<employee_id>') # Route_3
-
 
 if __name__=='__main__':
 
