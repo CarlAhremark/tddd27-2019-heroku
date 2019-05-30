@@ -9,23 +9,20 @@ import json
 
 app = Flask(__name__)
 api = Api(app)
-
 SECRET_KEY = '1942e6cc2c1e7f6cfcd37551'
-
 CORS(app)
 
 @app.route("/")
-def hello():
-    return jsonify(Courses.get(objectId="529413"))
+def start():
+    return jsonify(Courses.get(objectId="529413")) #TODO, maby make homepage display useful info
 
-@app.route("/test", methods=['GET'])
-def retrieve_courselist():
-    courseList = request.data
-    print(courseList)
-    return courseList
+@app.route('/<object>')
+def get_course(object):
+    return jsonify(Courses.get(object))
 
 class Courses(Resource):
-    def create_json(raw_data): #Osäker på formateringen om vi ska få den till json, kanske ska vara ' eller "
+    #Format incomming text and return it
+    def create_json(raw_data):
 
         count = raw_data['info']['reservationcount']
         json_string = {}
@@ -55,7 +52,7 @@ class Courses(Resource):
 
             json_string[i]['title'] = title
 
-            json_string[i]['color'] = 'color.blue'
+            json_string[i]['color'] = 'colors.blue' #Decide color for calendar event, (default is also blue)
 
         return json_string
 
@@ -70,7 +67,11 @@ class Courses(Resource):
         #https://cloud.timeedit.net/liu/web/schema/ri.json?sid=3&p=190101-190631&objects= 529413,529626 .txt#formatlinks
 
         page_url = "https://cloud.timeedit.net/liu/web/schema/ri.json?sid=3&p=190101-190631&objects=" + objectId + ".txt#formatlinks"
-        result = requests.get(page_url).text
+        try:
+            result = requests.get(page_url).text
+        except requests.ConnectionError:
+            return "Connection error"
+
         data = loads(result)
         return Courses.create_json(data)
 
